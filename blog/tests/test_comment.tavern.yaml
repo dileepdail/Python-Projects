@@ -1,0 +1,82 @@
+---
+
+test_name: Add a comment to an article that doesn't exist.
+
+includes:
+
+stages:
+    - name: Unable to add comment! The article does not exist.
+      request:
+        url: "http://localhost:5100/comments"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: abc
+          tags: ["maintenance"]
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 404
+---
+
+---
+
+test_name: Post an anonymous comment to an article.
+
+includes:
+
+stages:
+    - name: comment added.
+      request:
+        url: "http://localhost:5100/comments"
+        json:
+          article_url: url8
+          body: "This is an anonymous comment."
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 201
+---
+
+---
+
+test_name: Post an authenticated comment to an article.
+
+includes:
+
+stages:
+    - name: comment added authentically.
+      request:
+        url: "http://localhost:5100/comments"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: url8
+          body: "This is an authenticated comment."
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 201
+---
+
+---
+
+test_name: Retrieve the comments on the article in order.
+
+includes:
+
+stages:
+    - name: comments retrieved.
+      request:
+        url: "http://localhost:5100/comments/url8/2"
+        method: GET
+        headers:
+          content-type: application/json
+      response:
+        status_code: 200
+---

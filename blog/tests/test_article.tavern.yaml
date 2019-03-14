@@ -1,0 +1,110 @@
+---
+
+test_name: Post an article without authenticating.
+
+includes:
+
+stages:
+    - name: Unable to add article!
+      request:
+        url: "http://localhost:5200/articles"
+        json:
+          title: web back end
+          body: "This is the body of article ."
+          author: sa
+          article_url: abc
+          user_id: 1
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 401
+---
+
+---
+test_name: try to post an article with wrong password.
+
+includes:
+
+stages:
+    - name: Password is incorrect.
+      request:
+        url: "http://localhost:5200/articles"
+        auth:
+          - nikita
+          - klm2
+        json:
+          title: Unemployment
+          body: "This ia article based on unemployment."
+          user_name: nikita
+          article_url: abcdef
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 401
+---
+
+---
+
+test_name: make sure article is posted successfully.
+
+includes:
+
+stages:
+    - name: New article posted.
+      request:
+        url: "http://localhost:5200/articles"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: kglhj
+          body: "This ia article based on unemployment."
+          title: Unemployment1
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 201
+
+---
+
+---
+
+test_name: retrieve the newly posted article.
+
+includes:
+
+stages:
+    - name: Retrieved the article.
+      request:
+        url: "http://localhost:5200/articles/1"
+        auth:
+          - sa
+          - a
+        method: GET
+        headers:
+          content-type: application/json
+      response:
+        status_code: 200
+
+---
+
+---
+
+test_name: check that the newly posted article is the most recent.
+
+includes:
+
+stages:
+    - name: Check recent article.
+      request:
+        url: "http://localhost:5200/articles/1"
+        method: GET
+        headers:
+          content-type: application/json
+      response:
+        status_code: 200
+
+---

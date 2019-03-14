@@ -1,0 +1,108 @@
+---
+
+test_name: add an article with new tag.
+
+includes:
+
+stages:
+    - name: tag added.
+      request:
+        url: "http://localhost:5300/tags"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: url8
+          tags: ["emp_rate", "recession"]
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 201
+---
+
+---
+
+test_name: list all articles with the new tag.
+
+includes:
+
+stages:
+    - name: articles listed.
+      request:
+        url: "http://localhost:5300/tags/article-url/recession"
+        method: GET
+        headers:
+          content-type: application/json
+      response:
+        status_code: 200
+---
+
+---
+
+test_name: Add another tag to an article.
+
+includes:
+
+stages:
+    - name: tag added.
+      request:
+        url: "http://localhost:5300/tags"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: url8
+          tags: ["code", "software"]
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 201
+---
+
+---
+
+test_name: Delete one of the tags from article.
+
+includes:
+
+stages:
+    - name: tag deleted.
+      request:
+        url: "http://localhost:5300/tags"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: url8
+          tags: ["recession"]
+        method: DELETE
+        headers:
+          content-type: application/json
+      response:
+        status_code: 200
+---
+
+---
+
+test_name: Add a tag to an article that doesn't exist.
+
+includes:
+
+stages:
+    - name: Unable to add tag! The article does not exist.
+      request:
+        url: "http://localhost:5300/tags"
+        auth:
+          - sa
+          - a
+        json:
+          article_url: abc
+          tags: ["maintenance"]
+        method: POST
+        headers:
+          content-type: application/json
+      response:
+        status_code: 409
+---

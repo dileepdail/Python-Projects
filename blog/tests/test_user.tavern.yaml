@@ -1,0 +1,106 @@
+---
+
+test_name: Change password for the user that doesn't exist.
+
+includes:
+
+stages:
+  - name: Unable to change password! The user doesn't exist.
+    request:
+      url: "http://localhost:5000/users/5"
+      auth:
+        - sa
+        - a
+      json:
+        password: backend
+      method: PUT
+      headers:
+        content-type: application/json
+    response:
+      status_code: 404
+---
+
+
+---
+test_name: make sure user is created successfully.
+
+includes:
+
+stages:
+  - name: New user created.
+    request:
+      url: "http://localhost:5000/users"
+      json:
+        username: dilip1
+        email_id: dilip34@gmail.com
+        password: pqrst
+      auth:
+        - username
+        - password
+      method: POST
+      headers:
+        content-type: application/json
+    response:
+      status_code: 201
+---
+
+---
+test_name: make sure password is changed successfully.
+
+includes:
+
+stages:
+  - name: Password changed successfully.
+    request:
+      url: "http://localhost:5000/users/3"
+      auth:
+        - dilip1
+        - pqrst
+      json:
+        password: backend
+      method: PUT
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+---
+
+---
+test_name: make sure user is deleted successfully.
+
+includes:
+
+stages:
+  - name: User deleted successfully.
+    request:
+      url: "http://localhost:5000/users/3"
+      auth:
+        - dilip1
+        - backend
+      method: DELETE
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+---
+
+---
+test_name: Try to change password for deleted user.
+
+includes:
+
+stages:
+  - name: Unable to change password! The user doesn't exist.
+    request:
+      url: "http://localhost:5000/users/5"
+      auth:
+        - dilip
+        - backend
+      json:
+        password: backend
+      method: PUT
+      headers:
+        content-type: application/json
+    response:
+      status_code: 401
+---

@@ -1,0 +1,12 @@
+Install dependencies : 
+
+pip3 install -r requirements.txt
+
+Run project and activate all microsrvices:
+
+foreman start
+
+
+Test all micro services(In another terminal):
+
+python app.py test

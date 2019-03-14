@@ -1,0 +1,142 @@
+1. Add tags
+
+URL : http://localhost:5003/tags
+
+Method : POST
+
+Body : 
+
+{
+ "article_url" : "url8",
+	"tags" : ["computer systems", "big data"] 
+}
+
+Curl command : 
+
+curl -X POST \
+  http://localhost:5003/tags \
+  
+	-H 'Content-Type: application/json' \
+  
+	-H 'Postman-Token: dc64cbe9-69ae-421c-9ea4-0c5ea7f9307c' \
+  
+	-H 'cache-control: no-cache' \
+  
+	-d '{
+	"article_url" : "url8",
+	"tags" : ["computer systems", "big data"]
+}'
+
+Response:
+
+{
+   "article_url" : "url8",
+	"tags" : ["computer systems", "big data"]
+}
+
+2. Get tags by article url
+
+URL : http://localhost:5003/tags/url8
+
+Method : GET
+
+Curl command :
+
+curl -X GET \
+  http://localhost:5003/tags/url8 \
+  
+	-H 'Postman-Token: a030a0e3-e118-44ae-b4bf-c4fb8141d354' \
+  
+	-H 'cache-control: no-cache'
+
+Response:
+
+{
+  "data": {
+    "tags": [
+      "computer systems", 
+      "big data"
+    ]
+  }, 
+  "status": "success"
+}
+
+3. Get all the article_url's associated to a tag:
+
+URL : http://localhost:5003/tags/article-url/big data
+
+Method : GET
+
+Curl command : 
+
+curl -X GET \
+  http://localhost:5003/tags/article-url/big%20data \
+  -H 'Postman-Token: 962ddf92-8aa7-490e-bee0-6029fbd1804a' \
+  -H 'cache-control: no-cache'
+
+Response:
+
+{
+  "status": "success", 
+  "urls": {
+    "article_urls": [
+      "url8"
+    ]
+  }
+}
+
+Error's :
+
+If tag does not exist.
+Url : http://localhost:5003/tags/article-url/big
+
+Response code : 404
+
+Response object : 
+
+{
+  "message": "Tag :big does not exist", 
+  "status": "Failure"
+}
+
+4. Delete one or more tags form a URL
+
+URL : http://localhost:5003/tags
+
+Method : DELETE
+
+Body :
+
+{
+	"article_url" : "url8",
+	"tags" : ["computer systems", "big data"]
+}
+
+Curl command:
+
+curl -X DELETE \
+  http://localhost:5003/tags \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 7b5063e1-72a8-4e01-8f6f-e3e167bfe8b2' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"article_url" : "url8",
+	"tags" : ["computer systems", "big data"]
+}'
+
+Response : 
+
+{
+  "data": {
+    "tags deleted": [
+      [
+        "computer systems", 
+        "big data"
+      ]
+    ]
+  }, 
+  "status": "success"
+}
+
+
+

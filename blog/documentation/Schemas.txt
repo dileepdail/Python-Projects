@@ -1,0 +1,50 @@
+CREATE TABLE articles (
+	id INTEGER NOT NULL, 
+	title VARCHAR(200), 
+	author VARCHAR(100), 
+	body VARCHAR(2000), 
+	created_timestamp DATETIME, 
+	modified_timestamp DATETIME, 
+	article_url VARCHAR(100) NOT NULL, 
+	user_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	UNIQUE (title), 
+	UNIQUE (article_url), 
+	FOREIGN KEY(user_id) REFERENCES users (id)
+)
+
+
+CREATE TABLE users (
+	id INTEGER NOT NULL, 
+	username VARCHAR(128) NOT NULL, 
+	email_id VARCHAR(128) NOT NULL, 
+	password_hash VARCHAR(128), 
+	active BOOLEAN, 
+	created_timestamp DATETIME, 
+	modified_timestamp DATETIME, 
+	PRIMARY KEY (id), 
+	UNIQUE (username), 
+	UNIQUE (email_id), 
+	CHECK (active IN (0, 1))
+)
+
+
+CREATE TABLE comments (
+	id INTEGER NOT NULL, 
+	body VARCHAR(500), 
+	created_timestamp DATETIME, 
+	owner_id INTEGER, 
+	article_id INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(owner_id) REFERENCES users (id), 
+	FOREIGN KEY(article_id) REFERENCES articles (id)
+)
+
+
+CREATE TABLE tags (
+	id INTEGER NOT NULL, 
+	tag VARCHAR(100), 
+	article_url INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(article_url) REFERENCES articles (article_url)
+)

@@ -1,0 +1,154 @@
+1. Add a comment : 
+
+URL : http://localhost:5002/comments
+
+Method : POST
+
+Body : 
+{
+	"body": "I think its bad",
+	"article_url": "url8"
+}
+
+Response : 
+
+{
+    "message": "Comment I think its bad was added!",
+    "status": "success"
+}
+
+Curl Command : 
+
+curl -X POST \
+  http://localhost:5002/comments \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 91e26fc0-f919-41d1-930c-74ed9cb72772' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"body": "I think its bad",
+	"article_url": "url8"
+}'
+
+Errors : 
+1. If article url does not exist:
+
+Response code : 404
+
+{
+    "message": "Article Url test does not exist",
+    "status": "Failure"
+}
+
+2. Add comment with Auth:
+
+URL : http://localhost:5002/comments
+
+Method : POST
+
+Body : 
+{
+	"body": "I think its bad",
+	"article_url": "url8"
+}
+
+
+Response : 
+
+{
+    "message": "Comment I think its bad was added!",
+    "status": "success"
+}
+
+Curl Command :
+
+curl -X POST \
+  http://localhost:5002/comments \
+  
+	-H 'Authorization: Basic c2E6YQ==' \
+  
+	-H 'Content-Type: application/json' \
+  
+	-H 'Postman-Token: 6de4e5f9-4651-47f9-87a0-b69d274a93a0' \
+  
+	-H 'cache-control: no-cache' \
+  
+	-d '{
+	"body": "I think its bad",
+	"article_url": "url8"
+}'
+
+3. Get n latest comments given article url:
+
+URL : http://localhost:5002/comments/url8/8
+
+Here article_url is url8 and 8 means return 8 most recent articles.
+
+Method : GET
+
+Response:
+
+{
+  "data": {
+    "comments": [
+      {
+        "article_id": 1, 
+        "body": "I think its bad", 
+        "comment_id": 6, 
+        "created_timestamp": "Tue, 12 Mar 2019 14:51:35 GMT", 
+        "owner": "sa"
+      }, 
+      {
+        "article_id": 1, 
+        "body": "I think its bad", 
+        "comment_id": 5, 
+        "created_timestamp": "Tue, 12 Mar 2019 14:45:24 GMT", 
+        "owner": "Anonymous Coward."
+      }, 
+      {
+        "article_id": 1, 
+        "body": "I think its bad", 
+        "comment_id": 4, 
+        "created_timestamp": "Tue, 12 Mar 2019 14:15:33 GMT", 
+        "owner": "Anonymous Coward."
+      }, 
+	]
+  }, 
+  "status": "success"
+}
+
+Curl Command :
+
+curl -X GET \
+  http://localhost:5002/comments/url8/8 \
+  -H 'Postman-Token: cb855b76-b992-4be3-a389-a10748718a55' \
+  -H 'cache-control: no-cache'
+
+
+4. Delete a comment:
+
+URL : http://localhost:5002/comments/6
+
+
+Method : DELETE
+
+Curl command : 
+
+curl -X DELETE \
+  http://localhost:5002/comments/6 \
+  
+	-H 'Authorization: Basic c2E6YQ==' \
+  
+	-H 'Content-Type: application/json' \
+  
+	-H 'Postman-Token: 401a7d47-89cf-4f91-9d17-5b28c5bdfffb' \
+  
+	-H 'cache-control: no-cache'
+
+Response:
+
+{
+  "status": "success"
+}
+
+
+
