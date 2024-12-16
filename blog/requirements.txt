@@ -1,5 +1,5 @@
 click==6.6
-configobj==5.0.6
+configobj==5.0.9
 Flask
 itsdangerous==0.24
 Jinja2
